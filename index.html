@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,23 @@
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="image/x-icon">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
+    <header class="site-header">
+        <nav class="nav">
+            <a class="nav-logo" href="index.html">
+                <img src="./assets/img/logo.svg" alt="" width="44" height="44">
+                <span class="nav-logo-text">Hermanos Jota</span>
+            </a>
+
+            <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="productos.html">Catalogo</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
+
+            <a class="nav-cart" href="#" aria-label="Ver carrito de compras">
+                <img src="./assets/iconos/shopping_cart.svg" alt="" width="24" height="24">
+                <span class="nav-cart-count" id="cart-count">0</span>
+            </a>
         </nav>
     </header>
 
@@ -44,56 +54,18 @@
                 <h2 class="products-title">PRODUCTOS DESTACADOS</h2>
                 
                 <div class="products-carousel">
-                    <button class="carousel-btn carousel-btn-prev">❮</button>
-                    
-                    <div class="products-grid">
-                        <div class="product-card">
-                            <div class="product-badge">OFERTA</div>
-                            <div class="product-image">
-                                <img src="./assets/img/Biblioteca Recoleta.png" alt="Biblioteca Recoleta">
-                            </div>
-                            <h3 class="product-name">Biblioteca Recoleta</h3>
-                            <p class="product-price-original">$ 24.999,99</p>
-                            <p class="product-price">$ 19.999,99</p>
-                        </div>
+                    <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Productos anteriores">&#10094;</button>
 
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="./assets/img/Aparador Uspallata.png" alt="Aparador Uspallata">
-                            </div>
-                            <h3 class="product-name">Aparador Uspallata</h3>
-                            <p class="product-price">$ 19.999,99</p>
-                        </div>
-
-                        <div class="product-card">
-                            <div class="product-badge">OFERTA</div>
-                            <div class="product-image">
-                                <img src="./assets/img/Mesa de Noche Aconcagua.png" alt="Mesa de Noche Aconcagua">
-                            </div>
-                            <h3 class="product-name">Mesa de Noche Aconcagua</h3>
-                            <p class="product-price-original">$ 24.999,99</p>
-                            <p class="product-price">$ 19.999,99</p>
-                        </div>
-
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="./assets/img/Silla de Trabajo Belgrano.png" alt="Silla de Trabajo Belgrano">
-                            </div>
-                            <h3 class="product-name">Silla de Trabajo Belgrano</h3>
-                            <p class="product-price">$ 19.999,99</p>
-                        </div>
+                    <!-- Las tarjetas las inyecta js/main.js desde el array de js/productos.js -->
+                    <div class="products-viewport">
+                        <div class="products-track"></div>
                     </div>
 
-                    <button class="carousel-btn carousel-btn-next">❯</button>
+                    <button class="carousel-btn carousel-btn-next" type="button" aria-label="Productos siguientes">&#10095;</button>
                 </div>
 
-                <div class="carousel-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
+                <!-- Un punto por página, generados dinámicamente -->
+                <div class="carousel-dots"></div>
 
                 <a href="productos.html" class="products-button">CATALOGO COMPLETO</a>
             </div>
@@ -131,5 +103,8 @@
             <p>© 2026 Hermanos Jota. Todos los derechos reservados</p>
         </div>
     </footer>
+    <script src="./js/productos.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

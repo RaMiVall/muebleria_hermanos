@@ -1,3 +1,17 @@
+/* ========================================================================
+   MUEBLERÍA HERMANOS JOTA — HOJA DE ESTILOS
+   ------------------------------------------------------------------------
+   Metodología MOBILE FIRST: los estilos base describen la vista de celular
+   y las media queries (min-width) van agregando lo que hace falta en
+   pantallas más grandes. Nunca se usa max-width.
+
+   Breakpoints:
+     base                     celular   (hasta 767px)
+     @media (min-width: 768px)  tablet
+     @media (min-width: 1024px) escritorio
+   ======================================================================== */
+
+
 /* ========================================
    VARIABLES - COLORES Y TIPOGRAFÍA
    ======================================== */
@@ -21,7 +35,7 @@
     --font-primary-regular: 400;
     --font-primary-medium: 500;
     --font-primary-bold: 700;
-    
+
     /* Tipografía Secundaria - Playfair Display / Georgia */
     --font-secondary: 'Playfair Display', Georgia, serif;
     --font-secondary-regular: 400;
@@ -77,54 +91,150 @@ img {
     outline-offset: 3px;
 }
 
+
 /* ========================================
    HEADER
    ======================================== */
-header {
+.site-header {
     background-color: var(--color-siena-tostado);
-    padding: 18px 0;
+    padding: 12px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-header nav {
+.nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    padding: 0 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0 16px;
 }
 
-header nav ul {
+/* --- Logo --- */
+.nav-logo {
     display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-header nav ul li {
-    margin-right: 20px;
-}
-
-header nav ul li:last-child {
-    margin-right: 0;
-}
-
-header nav ul li a {
+    align-items: center;
+    gap: 10px;
     text-decoration: none;
+}
+
+/* El logo es del mismo color que el header, así que se apoya sobre un
+   círculo claro para que se vea */
+.nav-logo img {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-alabastro-calido);
+    border-radius: 50%;
+    padding: 4px;
+    flex-shrink: 0;
+}
+
+.nav-logo-text {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem;
+    font-weight: var(--font-secondary-bold);
     color: var(--color-alabastro-calido);
-    font-weight: var(--font-primary-bold);
-    font-size: 1.2rem;
+    line-height: 1.1;
     transition: color var(--transition-base);
 }
 
-header nav ul li a:hover {
+.nav-logo:hover .nav-logo-text {
     color: var(--color-vara-de-oro);
 }
 
+/* --- Menú de navegación --- */
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    list-style: none;
+    /* En celular el menú baja a una segunda fila ocupando el ancho */
+    order: 3;
+    width: 100%;
+}
 
+.nav-menu a {
+    text-decoration: none;
+    color: var(--color-alabastro-calido);
+    font-weight: var(--font-primary-bold);
+    font-size: 1rem;
+    transition: color var(--transition-base);
+}
+
+.nav-menu a:hover {
+    color: var(--color-vara-de-oro);
+}
+
+/* --- Carrito ---
+   El contador lo actualiza js/carrito.js mediante el id #cart-count */
+.nav-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    text-decoration: none;
+    transition: transform var(--transition-base);
+}
+
+.nav-cart:hover {
+    transform: scale(1.1);
+}
+
+.nav-cart img {
+    width: 26px;
+    height: 26px;
+}
+
+.nav-cart-count {
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    min-width: 20px;
+    padding: 0 5px;
+    background-color: var(--color-vara-de-oro);
+    color: var(--color-blanco);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: var(--font-primary-bold);
+    line-height: 20px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .site-header {
+        padding: 18px 0;
+    }
+
+    .nav {
+        flex-wrap: nowrap;
+        gap: 24px;
+        padding: 0 24px;
+    }
+
+    .nav-logo img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .nav-logo-text {
+        font-size: 1.3rem;
+    }
+
+    /* En pantallas grandes el menú vuelve a la fila principal */
+    .nav-menu {
+        order: 0;
+        width: auto;
+        gap: 24px;
+    }
+
+    .nav-menu a {
+        font-size: 1.2rem;
+    }
+}
 
 
 /* ========================================
@@ -132,32 +242,37 @@ header nav ul li a:hover {
    ======================================== */
 .hero {
     display: flex;
+    /* En celular la imagen va arriba y el texto abajo */
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
     background-color: var(--color-alabastro-calido);
-    padding: 80px 40px;
-    gap: 60px;
+    padding: 40px 20px;
+    gap: 30px;
     min-height: 100vh;
     width: 100%;
 }
 
 .hero-content {
-    flex: 0 0 400px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .hero-image {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.hero-image img {
+    max-width: 250px;
+    height: auto;
+}
+
 .hero-title {
     font-family: var(--font-secondary);
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: var(--font-secondary-bold);
     color: var(--color-siena-tostado);
     line-height: 1.2;
@@ -167,7 +282,7 @@ header nav ul li a:hover {
     font-family: var(--font-primary);
     font-size: 1rem;
     font-weight: var(--font-primary-regular);
-    color: #333;
+    color: var(--color-texto);
     line-height: 1.8;
     max-width: 500px;
 }
@@ -192,25 +307,28 @@ header nav ul li a:hover {
     box-shadow: 0 4px 12px var(--color-sombra-boton);
 }
 
-.hero-image img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .hero {
-        flex-direction: column-reverse;
-        padding: 40px 20px;
-        min-height: 100vh;
+        /* Dos columnas: texto a la izquierda, imagen a la derecha */
+        flex-direction: row;
+        padding: 80px 40px;
+        gap: 60px;
     }
 
-    .hero-title {
-        font-size: 2.5rem;
+    .hero-content {
+        flex: 0 0 400px;
+    }
+
+    .hero-image {
+        flex: 1;
     }
 
     .hero-image img {
-        max-width: 250px;
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
     }
 }
 
@@ -220,7 +338,7 @@ header nav ul li a:hover {
    ======================================== */
 .about {
     background-color: var(--color-alabastro-calido);
-    padding: 80px 20px;
+    padding: 60px 20px;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -233,12 +351,12 @@ header nav ul li a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
 .about-title {
     font-family: var(--font-secondary);
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: var(--font-secondary-bold);
     color: var(--color-siena-tostado);
     text-align: center;
@@ -247,7 +365,7 @@ header nav ul li a:hover {
 
 .about-card {
     background-color: var(--color-blanco);
-    padding: 50px 40px;
+    padding: 30px 25px;
     border-radius: 12px;
     box-shadow: var(--shadow-card);
     border-left: 6px solid var(--color-siena-tostado);
@@ -255,29 +373,32 @@ header nav ul li a:hover {
 
 .about-card p {
     font-family: var(--font-primary);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: var(--font-primary-regular);
     color: var(--color-texto);
     line-height: 1.8;
     text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .about {
-        padding: 60px 20px;
+        padding: 80px 20px;
+    }
+
+    .about-container {
+        gap: 40px;
     }
 
     .about-title {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
 
     .about-card {
-        padding: 30px 25px;
+        padding: 50px 40px;
     }
 
     .about-card p {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
     }
 }
 
@@ -287,7 +408,7 @@ header nav ul li a:hover {
    ======================================== */
 .products {
     background-color: var(--color-alabastro-calido);
-    padding: 80px 20px;
+    padding: 60px 20px;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -296,36 +417,63 @@ header nav ul li a:hover {
 
 .products-container {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
 }
 
 .products-title {
     font-family: var(--font-secondary);
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: var(--font-secondary-bold);
     color: var(--color-siena-tostado);
     text-align: center;
     letter-spacing: 2px;
 }
 
+
+/* ----------------------------------------
+   CARRUSEL
+   El viewport recorta y el track se desplaza. js/main.js lee
+   --cards-per-view para saber de a cuántas tarjetas avanzar.
+   ---------------------------------------- */
 .products-carousel {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 12px;
     width: 100%;
+}
+
+.products-viewport {
+    flex: 1;
+    overflow: hidden;
+}
+
+.products-track {
+    /* Tarjetas visibles a la vez. Debe coincidir con el flex-basis
+       de .products-track .product-card en cada breakpoint */
+    --cards-per-view: 1;
+    --carousel-gap: 15px;
+
+    display: flex;
+    gap: var(--carousel-gap);
+    transition: transform 0.4s ease;
+}
+
+.products-track .product-card {
+    flex: 0 0 100%;
 }
 
 .carousel-btn {
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--color-siena-tostado);
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: color var(--transition-base);
     flex-shrink: 0;
 }
 
@@ -333,13 +481,49 @@ header nav ul li a:hover {
     color: var(--color-vara-de-oro);
 }
 
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    flex: 1;
+.carousel-dots {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
+.dot {
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--color-siena-tostado);
+    cursor: pointer;
+    transition: opacity var(--transition-base);
+    opacity: 0.5;
+}
+
+.dot.active {
+    opacity: 1;
+}
+
+.dot:hover {
+    opacity: 0.8;
+}
+
+
+/* ----------------------------------------
+   GRILLA DE CATÁLOGO (productos.html)
+   ---------------------------------------- */
+.products-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: 100%;
+}
+
+
+/* ----------------------------------------
+   TARJETA DE PRODUCTO
+   La genera js/main.js con crearTarjetaProducto()
+   ---------------------------------------- */
 .product-card {
     background-color: var(--color-blanco);
     border: 3px solid var(--color-siena-tostado);
@@ -357,12 +541,21 @@ header nav ul li a:hover {
     box-shadow: var(--shadow-card-hover);
 }
 
+/* Toda la tarjeta es un enlace al detalle del producto */
+.product-link {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+}
+
 .product-badge {
     position: absolute;
     top: 10px;
     left: 10px;
     background-color: var(--color-vara-de-oro);
-    color: #fff;
+    color: var(--color-blanco);
     padding: 8px 16px;
     font-family: var(--font-primary);
     font-weight: var(--font-primary-bold);
@@ -373,7 +566,7 @@ header nav ul li a:hover {
 
 .product-image {
     width: 100%;
-    height: 250px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -410,29 +603,26 @@ header nav ul li a:hover {
     text-align: center;
 }
 
-.carousel-dots {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+
+/* ----------------------------------------
+   ESTADOS DE CARGA Y ERROR
+   ---------------------------------------- */
+.estado-carga,
+.estado-error {
+    flex: 0 0 100%;
+    grid-column: 1 / -1;
+    padding: 40px 20px;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    color: var(--color-siena-tostado);
+    text-align: center;
 }
 
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: var(--color-siena-tostado);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    opacity: 0.5;
+.estado-error {
+    color: var(--color-rosa-polvoriento);
+    font-weight: var(--font-primary-bold);
 }
 
-.dot.active {
-    opacity: 1;
-}
-
-.dot:hover {
-    opacity: 0.8;
-}
 
 .products-button {
     display: inline-block;
@@ -453,36 +643,187 @@ header nav ul li a:hover {
     box-shadow: 0 4px 12px var(--color-sombra-boton);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .products {
-        padding: 60px 20px;
+        padding: 80px 20px;
+    }
+
+    .products-container {
+        gap: 50px;
     }
 
     .products-title {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
 
     .products-carousel {
-        gap: 15px;
+        gap: 30px;
     }
 
     .carousel-btn {
-        font-size: 1.5rem;
+        font-size: 2rem;
+    }
+
+    /* Dos tarjetas por pantalla */
+    .products-track {
+        --cards-per-view: 2;
+        --carousel-gap: 30px;
+    }
+
+    .products-track .product-card {
+        flex: 0 0 calc((100% - var(--carousel-gap)) / 2);
     }
 
     .products-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .product-image {
-        height: 200px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Cuatro tarjetas por pantalla */
+    .products-track {
+        --cards-per-view: 4;
+    }
+
+    .products-track .product-card {
+        flex: 0 0 calc((100% - 3 * var(--carousel-gap)) / 4);
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* ========================================
+   CATÁLOGO (productos.html)
+   ======================================== */
+.catalog {
+    background-color: var(--color-alabastro-calido);
+    padding: 40px 20px 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.catalog-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.catalog-title {
+    font-family: var(--font-secondary);
+    font-size: 1.8rem;
+    font-weight: var(--font-secondary-bold);
+    color: var(--color-siena-tostado);
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.catalog-intro {
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    color: var(--color-texto);
+    line-height: 1.7;
+    text-align: center;
+    max-width: 620px;
+}
+
+/* --- Buscador --- */
+.search-form {
+    width: 100%;
+    max-width: 520px;
+}
+
+/* La etiqueta existe para lectores de pantalla, no se dibuja */
+.search-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-siena-tostado);
+    border-radius: 999px;
+    padding: 10px 18px;
+    transition: box-shadow var(--transition-base);
+}
+
+.search-field:focus-within {
+    box-shadow: 0 4px 14px var(--color-sombra-card);
+}
+
+/* El icono viene en color alabastro para el header, acá se tiñe de siena */
+.search-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    filter: brightness(0) saturate(100%) invert(32%) sepia(48%) saturate(892%) hue-rotate(340deg) brightness(94%) contrast(88%);
+}
+
+.search-field input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--color-texto);
+    min-width: 0;
+}
+
+.search-field input:focus {
+    outline: none;
+}
+
+.search-field input::placeholder {
+    color: #999;
+}
+
+.catalog-count {
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    font-weight: var(--font-primary-bold);
+    color: var(--color-siena-tostado);
+    align-self: flex-start;
+}
+
+.estado-vacio {
+    grid-column: 1 / -1;
+    padding: 40px 20px;
+    font-family: var(--font-primary);
+    font-size: 1.05rem;
+    color: var(--color-siena-tostado);
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .catalog {
+        padding: 60px 20px 80px;
+    }
+
+    .catalog-container {
+        gap: 28px;
+    }
+
+    .catalog-title {
+        font-size: 2.5rem;
+    }
+
+    .catalog-intro {
+        font-size: 1.05rem;
     }
 }
 
@@ -492,7 +833,7 @@ header nav ul li a:hover {
    ======================================== */
 .contact {
     background-color: var(--color-alabastro-calido);
-    padding: 80px 20px;
+    padding: 60px 20px;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -508,13 +849,13 @@ header nav ul li a:hover {
     background-color: var(--color-blanco);
     border: 3px solid var(--color-siena-tostado);
     border-radius: 12px;
-    padding: 40px;
+    padding: 30px 20px;
     box-shadow: 0 8px 24px rgba(160, 82, 45, 0.15);
 }
 
 .contact-title {
     font-family: var(--font-primary);
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: var(--font-primary-bold);
     color: var(--color-siena-tostado);
     margin-bottom: 30px;
@@ -594,18 +935,17 @@ header nav ul li a:hover {
     text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .contact {
-        padding: 60px 20px;
+        padding: 80px 20px;
     }
 
     .contact-form-card {
-        padding: 30px 20px;
+        padding: 40px;
     }
 
     .contact-title {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 }
 
@@ -624,7 +964,7 @@ footer {
     max-width: 1200px;
     margin: 0 auto 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 30px;
 }
 
@@ -639,14 +979,14 @@ footer {
     font-size: 1.3rem;
     font-weight: var(--font-secondary-bold);
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--color-blanco);
 }
 
 .footer-section h4 {
     font-family: var(--font-primary);
     font-weight: var(--font-primary-bold);
     margin-bottom: 8px;
-    color: #fff;
+    color: var(--color-blanco);
 }
 
 .footer-section p {
@@ -659,7 +999,7 @@ footer {
 .footer-section a {
     color: var(--color-alabastro-calido);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-base);
 }
 
 .footer-section a:hover {
@@ -673,7 +1013,7 @@ footer {
     padding: 8px 16px;
     border: 1px solid var(--color-alabastro-calido);
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
 }
 
 .footer-link:hover {
@@ -687,4 +1027,10 @@ footer {
     padding-top: 20px;
     font-size: 0.9rem;
     color: var(--color-alabastro-calido);
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 }
