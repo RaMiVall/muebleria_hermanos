@@ -32,25 +32,29 @@
         <section class="contact">
             <div class="contact-container">
                 <div class="contact-form-card">
-                    <h2 class="contact-title">Formulario de contacto</h2>
-                    <form class="contact-form" action="#" method="POST">
+                    <form class="contact-form" action="#" method="POST" novalidate>
+                        <h2 class="contact-title">Formulario de contacto</h2>
+
                         <div class="form-group">
-                            <label for="name">Nombre y Apellido *</label>
-                            <input type="text" id="name" name="name" placeholder="Ej: José Antonio Jira" required>
+                            <label for="name">Nombre y Apellido <span class="required-mark" aria-hidden="true">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Nombre completo" required>
+                            <p class="form-error" id="name-error" role="alert"></p>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Correo *</label>
-                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                            <label for="email">Correo <span class="required-mark" aria-hidden="true">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required>
+                            <p class="form-error" id="email-error" role="alert"></p>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Telefono</label>
                             <input type="tel" id="phone" name="phone" placeholder="+54 11 2345-6789">
+                            <p class="form-error" id="phone-error" role="alert"></p>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">Motivo de contacto*</label>
+                            <label for="subject">Motivo de contacto <span class="required-mark" aria-hidden="true">*</span></label>
                             <select id="subject" name="subject" required>
                                 <option value="">Elige Motivo</option>
                                 <option value="consulta">Consulta General</option>
@@ -58,16 +62,26 @@
                                 <option value="personalizado">Mueble Personalizado</option>
                                 <option value="otro">Otro</option>
                             </select>
+                            <p class="form-error" id="subject-error" role="alert"></p>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Mensaje *</label>
+                            <label for="message">Mensaje <span class="required-mark" aria-hidden="true">*</span></label>
                             <textarea id="message" name="message" rows="6" placeholder="Escribí tu mensaje aquí..." required></textarea>
+                            <p class="form-error" id="message-error" role="alert"></p>
                         </div>
 
                         <button type="submit" class="contact-button">ENVIAR</button>
-                        <p class="form-note">Por favor rellenar campos obligatorios</p>
+                        <p class="form-note" id="form-note">Por favor rellenar campos obligatorios</p>
                     </form>
+
+                    <div class="contact-success" id="contact-success" hidden>
+                        <img class="contact-success-image" src="assets/iconos/check_circle.svg" alt="Imagen de mensaje enviado con éxito" width="208" height="208">
+                        <p class="contact-success-message">Mensaje enviado con éxito!<br>
+                            En nuestro equipo se comunicara dentro de breve<br>
+                           <strong>Muchas Gracias!</strong></p>
+                        <a class="contact-success-button" href="index.html">VOLVER A INICIO</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -104,5 +118,6 @@
             <p>© 2026 Hermanos Jota. Todos los derechos reservados</p>
         </div>
     </footer>
+    <script src="./js/contacto.js"></script>
 </body>
 </html>
