@@ -1,6 +1,13 @@
-# Mueblería Hermanos Jota
+# Trabajo integrador Fullstack Developer 2026 - ITBA
 
-Sitio web de catálogo y contacto para una mueblería artesanal. La aplicación presenta los productos de la empresa, permite buscar y filtrar por categoría, y ofrece un formulario de contacto con validación de campos obligatorios.
+repositorio para trabajo integrador grupal del grupo 6 Comision 1 TT. El  mismo consiste en una página de e-commerce para una muebleria ficticia: Hermanos Jota.
+
+Integrantes:
+- Contreras Valentin Ramiro
+- Dorado Escudero Facundo
+- García Fontana Sebastián José
+- Ramírez Lautaro Agustín
+- Retamozo Sequeira Jorge Nicolas
 
 ## Funcionalidades
 
