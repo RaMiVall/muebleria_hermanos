@@ -244,6 +244,17 @@ async function buscarProductos(texto) {
     });
 }
 
+async function filtrarPorCategoria(categoria) {
+    const productos = await obtenerProductos();
+    return productos.filter((producto) => producto.categoria === categoria);
+}
+
+async function obtenerCategorias(){
+    const productos = await obtenerProductos();
+    return [...new Set(productos.map(producto => producto.categoria))];
+}
+
+
 /* Formatea un número como precio argentino: 899999.99 => "$ 899.999,99" */
 function formatearPrecio(precio) {
     return "$ " + precio.toLocaleString("es-AR", {

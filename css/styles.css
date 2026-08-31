@@ -800,6 +800,24 @@ img {
     align-self: flex-start;
 }
 
+.category-filter {
+    display: none;
+}
+
+.category-filter:not([hidden]) {
+    display: flex;
+    align-self: flex-start;
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-siena-tostado);
+    border-radius: 10px;
+    padding: 5px 10px;
+    
+}
+
+.category-filter[hidden] {
+    display: none !important;
+}
+
 .estado-vacio {
     grid-column: 1 / -1;
     padding: 40px 20px;
