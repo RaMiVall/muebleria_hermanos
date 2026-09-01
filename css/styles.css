@@ -321,19 +321,27 @@ img {
 
 @media (min-width: 768px) {
     .hero {
-        /* Dos columnas: texto a la izquierda, imagen a la derecha */
-        justify-content: flex-start;
         flex-direction: row;
-        padding: 80px 40px;
-        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 24px;
+        gap: 60px;
+        max-width: 1500px;
+        margin: 0 auto;
     }
 
     .hero-content {
-        flex: 0 0 400px;
+        flex: 0 0 420px;
+        align-items: flex-start;
+        justify-content: center;
+        margin-left: 20px;
     }
 
     .hero-image {
-        flex: 1;
+        flex: 0 0 420px;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
     }
 
     .hero-image img {
