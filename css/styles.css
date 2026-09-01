@@ -60,6 +60,7 @@
 html,
 body {
     height: 100%;
+    background-color: var(--color-alabastro-calido);
 }
 
 body {
@@ -360,6 +361,7 @@ img {
 .about {
     background-color: var(--color-alabastro-calido);
     padding: 60px 20px;
+    margin: 150px 0px;
     min-height: 50vh;
     display: flex;
     align-items: center;
