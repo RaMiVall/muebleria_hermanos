@@ -255,8 +255,7 @@ img {
    ======================================== */
 .hero {
     display: flex;
-    /* En celular la imagen va arriba y el texto abajo */
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--color-alabastro-calido);
@@ -323,9 +322,10 @@ img {
 @media (min-width: 768px) {
     .hero {
         /* Dos columnas: texto a la izquierda, imagen a la derecha */
+        justify-content: flex-start;
         flex-direction: row;
         padding: 80px 40px;
-        gap: 60px;
+        gap: 30px;
     }
 
     .hero-content {
@@ -352,7 +352,7 @@ img {
 .about {
     background-color: var(--color-alabastro-calido);
     padding: 60px 20px;
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -395,7 +395,7 @@ img {
 
 @media (min-width: 768px) {
     .about {
-        padding: 80px 20px;
+        padding: 40px 20px;
     }
 
     .about-container {
@@ -867,7 +867,7 @@ img {
 .contact {
     background-color: var(--color-alabastro-calido);
     padding: 60px 20px;
-    min-height: 100vh;
+    min-height: 95vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1049,7 +1049,7 @@ img {
 
 @media (min-width: 768px) {
     .contact {
-        padding: 80px 20px;
+        padding: 40px 20px;
     }
 
     .contact-form-card {
