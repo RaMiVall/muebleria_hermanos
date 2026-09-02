@@ -33,6 +33,7 @@ Integrantes:
 - `productos.html`: catálogo completo de productos
 - `producto.html`: detalle de un producto individual
 - `contacto.html`: formulario de contacto
+- `carrito.html`: página de revisión del carrito, gestión de cantidades y cálculo del total de compra
 - `css/styles.css`: estilos del sitio
 - `js/`: lógica del catálogo, formulario, carrusel y utilidades
 - `assets/`: imágenes, íconos y recursos visuales
