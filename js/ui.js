@@ -34,6 +34,18 @@ function crearTarjetaProducto(producto) {
         </a>
     `;
 
+        const botonAgregar = document.createElement("button");
+    botonAgregar.type = "button";
+    botonAgregar.className = "cart-btn-primary";
+    botonAgregar.textContent = "Agregar al carrito";
+    
+    botonAgregar.addEventListener("click", (e) => {
+        e.preventDefault();
+        agregarAlCarrito(producto.id);
+    });
+
+    tarjeta.appendChild(botonAgregar);
+
     return tarjeta;
 }
 
