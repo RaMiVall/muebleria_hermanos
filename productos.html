@@ -10,21 +10,27 @@
 <body>
     <header class="site-header">
         <nav class="nav">
+            <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+                <img src="./assets/iconos/menu.svg" alt="" width="24" height="24">
+            </button>
+
             <a class="nav-logo" href="index.html">
                 <img src="./assets/img/logo.svg" alt="" width="44" height="44">
                 <span class="nav-logo-text">Hermanos Jota</span>
             </a>
+
+            <div class="nav-actions">
+                <a class="nav-cart" href="#" aria-label="Ver carrito de compras">
+                    <img src="./assets/iconos/shopping_cart.svg" alt="" width="24" height="24">
+                    <span class="nav-cart-count" id="cart-count">0</span>
+                </a>
+            </div>
 
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="productos.html">Catalogo</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-
-            <a class="nav-cart" href="#" aria-label="Ver carrito de compras">
-                <img src="./assets/iconos/shopping_cart.svg" alt="" width="24" height="24">
-                <span class="nav-cart-count" id="cart-count">0</span>
-            </a>
         </nav>
     </header>
 
@@ -86,6 +92,7 @@
 
     <script src="./js/productos.js"></script>
     <script src="./js/ui.js"></script>
+    <script src="./js/menu.js"></script>
     <script src="./js/catalogo.js"></script>
 </body>
 </html>
