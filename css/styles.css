@@ -678,6 +678,7 @@ img {
     flex-wrap: wrap;
     gap: 30px;
     width: 100%;
+    min-height: 60vh;
 }
 
 .products-grid .product-card {
@@ -1326,6 +1327,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 20px; 
+    min-height: 70vh;
 }
 
 .detail-main-block {
@@ -1497,6 +1499,14 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+#cart-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    min-height: 60vh;
 }
 
 .cart-title {
