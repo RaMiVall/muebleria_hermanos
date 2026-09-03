@@ -1,9 +1,5 @@
 /* ========================================================================
    MUEBLERÍA HERMANOS JOTA — HOJA DE ESTILOS
-   ------------------------------------------------------------------------
-   Metodología MOBILE FIRST: los estilos base describen la vista de celular
-   y las media queries (min-width) van agregando lo que hace falta en
-   pantallas más grandes. Nunca se usa max-width.
 
    Breakpoints:
      base                     celular   (hasta 767px)
@@ -985,7 +981,6 @@ img {
     border: 2px solid var(--color-siena-tostado);
     border-radius: 10px;
     padding: 5px 10px;
-    
 }
 
 .category-filter[hidden] {
@@ -1391,9 +1386,6 @@ footer {
 
 .spec-card {
     flex: 1 1 calc(50% - 5px);
-}
-
-.spec-card {
     background-color: var(--color-blanco);
     border: 1px solid var(--color-borde-suave);
     border-radius: 8px;

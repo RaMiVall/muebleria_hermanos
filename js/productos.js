@@ -207,6 +207,7 @@ const PRODUCTOS = [
 
 /* Demora para que se note el estado de carga */
 const DEMORA_SIMULADA = 500;
+const MAX_PRODUCTOS_DESTACADOS = 4;
 
 /* Devuelve una promesa que resuelve con una copia del catálogo completo */
 function obtenerProductos() {
@@ -217,10 +218,12 @@ function obtenerProductos() {
     });
 }
 
-/* Devuelve sólo los productos marcados como destacados */
+/* Devuelve sólo los productos marcados como destacados, limitados a 4 */
 async function obtenerDestacados() {
     const productos = await obtenerProductos();
-    return productos.filter((producto) => producto.destacado);
+    return productos
+        .filter((producto) => producto.destacado)
+        .slice(0, MAX_PRODUCTOS_DESTACADOS);
 }
 
 /* Busca un producto por su id. Devuelve undefined si no existe */
