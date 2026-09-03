@@ -28,7 +28,6 @@ const PRODUCTOS = [
         precio: 899999.99,
         precioOriginal: 1099999.99,
         oferta: true,
-        destacado: true,
         imagen: "./assets/img/Sofá Patagonia.png",
         alt: "Sofá de tres cuerpos tapizado en lino natural",
         descripcion: "Un sofá de tres cuerpos que invita a quedarse. Su estructura de lenga maciza y el tapizado en lino de fibra larga lo vuelven tan resistente como cómodo. Los almohadones de asiento son reversibles y desenfundables, pensados para acompañar la vida real de una casa.",
@@ -44,7 +43,6 @@ const PRODUCTOS = [
         precio: 429999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: true,
         imagen: "./assets/img/Sillón Copacabana.png",
         alt: "Sillón individual de líneas curvas con patas de madera",
         descripcion: "Homenaje al diseño brasileño de los años sesenta. Las curvas del respaldo se trabajan con madera laminada al vapor, una técnica artesanal que lleva tres días por pieza. El resultado es un sillón que abraza sin apretar.",
@@ -60,7 +58,6 @@ const PRODUCTOS = [
         precio: 314999.99,
         precioOriginal: 379999.99,
         oferta: true,
-        destacado: true,
         imagen: "./assets/img/Butaca Mendoza.png",
         alt: "Butaca baja con respaldo de listones de madera",
         descripcion: "Inspirada en las galerías de las bodegas cuyanas. El respaldo de listones separados deja pasar el aire y aliviana visualmente la pieza, ideal para espacios chicos donde un sillón macizo pesaría demasiado.",
@@ -76,7 +73,6 @@ const PRODUCTOS = [
         precio: 749999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: true,
         imagen: "./assets/img/Mesa Comedor Pampa.png",
         alt: "Mesa de comedor rectangular de madera maciza para seis personas",
         descripcion: "Una tabla única de algarrobo de más de dos metros, con la veta a la vista y los bordes respetando la forma original del árbol. Cada mesa es irrepetible porque ninguna tabla lo es. Entra cómoda para seis personas y aprieta para ocho.",
@@ -92,7 +88,6 @@ const PRODUCTOS = [
         precio: 259999.99,
         precioOriginal: 299999.99,
         oferta: true,
-        destacado: true,
         imagen: "./assets/img/Sillas Córdoba.png",
         alt: "Juego de dos sillas de comedor con asiento de fibra trenzada",
         descripcion: "Se venden por par. El asiento se teje a mano en fibra de totora siguiendo un patrón serrano tradicional, un trabajo de seis horas por silla. Livianas de levantar, firmes de sentar.",
@@ -108,7 +103,6 @@ const PRODUCTOS = [
         precio: 689999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: true,
         imagen: "./assets/img/Aparador Uspallata.png",
         alt: "Aparador bajo de cuatro puertas con frentes ranurados",
         descripcion: "Cuatro puertas con frentes ranurados a mano, cepillo por cepillo. Adentro, estantes regulables y un cajón forrado en fieltro para los cubiertos. Las bisagras son de bronce macizo y se ajustan con un destornillador común.",
@@ -124,7 +118,6 @@ const PRODUCTOS = [
         precio: 289999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: true,
         imagen: "./assets/img/Mesa de Centro Araucaria.png",
         alt: "Mesa ratona redonda de madera clara con estante inferior",
         descripcion: "Redonda a propósito: sin esquinas, circula mejor en livings chicos y es más segura si hay chicos en casa. El estante inferior resuelve el desorden de revistas y controles remotos sin agregar un mueble más.",
@@ -140,7 +133,6 @@ const PRODUCTOS = [
         precio: 179999.99,
         precioOriginal: 219999.99,
         oferta: true,
-        destacado: true,
         imagen: "./assets/img/Mesa de Noche Aconcagua.png",
         alt: "Mesa de luz de dos cajones con patas cónicas",
         descripcion: "Dos cajones con guías de madera sobre madera, sin metal: se abren en silencio y no se oxidan con la humedad. Las patas cónicas levantan el mueble del piso y hacen que la habitación respire.",
@@ -156,7 +148,6 @@ const PRODUCTOS = [
         precio: 619999.99,
         precioOriginal: 799999.99,
         oferta: true,
-        destacado: true,
         imagen: "./assets/img/Biblioteca Recoleta.png",
         alt: "Biblioteca alta de cinco estantes en madera maciza",
         descripcion: "Cinco estantes que aguantan lo que les pongas: cada uno soporta cuarenta kilos sin curvarse, gracias a un travesaño posterior oculto. Se ancla a la pared con dos tarugos incluidos en la entrega.",
@@ -172,7 +163,6 @@ const PRODUCTOS = [
         precio: 469999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: false,
         imagen: "./assets/img/Escritorio Costa.png",
         alt: "Escritorio de trabajo con cajonera lateral y pasacables",
         descripcion: "Pensado para trabajar de verdad. Tiene un pasacables integrado en la tapa, una bandeja oculta bajo el tablero para la notebook y una cajonera lateral que se puede montar a izquierda o derecha según tu espacio.",
@@ -188,7 +178,6 @@ const PRODUCTOS = [
         precio: 209999.99,
         precioOriginal: null,
         oferta: false,
-        destacado: false,
         imagen: "./assets/img/Silla de Trabajo Belgrano.png",
         alt: "Silla de escritorio de madera con respaldo curvo tapizado",
         descripcion: "El respaldo curvo se moldea al vapor para acompañar la curva lumbar, así que se puede pasar la tarde sentado sin quejarse. El asiento tapizado se desenfunda con cierre para lavarlo.",
@@ -218,12 +207,16 @@ function obtenerProductos() {
     });
 }
 
-/* Devuelve sólo los productos marcados como destacados, limitados a 4 */
+/* Devuelve 4 productos destacados */
 async function obtenerDestacados() {
     const productos = await obtenerProductos();
-    return productos
-        .filter((producto) => producto.destacado)
-        .slice(0, MAX_PRODUCTOS_DESTACADOS);
+    const destacados = [];
+    for (let i = 0; i < MAX_PRODUCTOS_DESTACADOS; i++) {
+        const rand_pos = Math.floor(Math.random() * productos.length);
+        destacados.push(productos[rand_pos]);
+        productos.splice(rand_pos, 1); /*evitar repetidos*/
+    }
+    return destacados;
 }
 
 /* Busca un producto por su id. Devuelve undefined si no existe */

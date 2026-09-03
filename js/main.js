@@ -81,10 +81,6 @@ function iniciarCarrusel(cantidadProductos) {
     actualizar();
 }
 
-/* ------------------------------------------------------------------------
-    ARRANQUE
-   ------------------------------------------------------------------------ */
-
 async function iniciarInicio() {
     const track = document.querySelector(".products-track");
 
