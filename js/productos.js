@@ -1,7 +1,10 @@
 /* ========================================================================
     CATÁLOGO DE PRODUCTOS — Mueblería Hermanos Jota
     ------------------------------------------------------------------------
-    No modificar los nombres de las propiedades sin avisar: index, catálogo 
+    Los productos se gestionan en un array de
+    objetos dentro de un archivo .js.
+
+    No modificar los nombres de las propiedades sin avisar: index, catálogo
     y detalle.
 
         id             number   identificador único (se usa en producto.html?id=)
@@ -10,7 +13,6 @@
         precio         number   precio vigente en pesos (sin formatear)
         precioOriginal number   precio anterior. null si no está en oferta
         oferta         boolean  true => se muestra el badge "OFERTA"
-        destacado      boolean  true => aparece en el carrusel del index
         imagen         string   ruta relativa a la imagen
         alt            string   texto alternativo de la imagen
         descripcion    string   descripción larga para producto.html
@@ -189,16 +191,15 @@ const PRODUCTOS = [
 ];
 
 /* ------------------------------------------------------------------------
-    API DE ACCESO A LOS DATOS para simular un backend: 
-    todas las funciones son asíncronas y tardan un rato,
+    Simular una petición de datos asíncrona para
+    cargar el catálogo. Las funciones devuelven promesas y tardan un rato,
     igual que una petición de red real.
    ------------------------------------------------------------------------ */
 
-/* Demora para que se note el estado de carga */
+/* Requisito de la consigna: carga asíncrona con setTimeout + async/await */
 const DEMORA_SIMULADA = 500;
 const MAX_PRODUCTOS_DESTACADOS = 4;
 
-/* Devuelve una promesa que resuelve con una copia del catálogo completo */
 function obtenerProductos() {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -219,13 +220,11 @@ async function obtenerDestacados() {
     return destacados;
 }
 
-/* Busca un producto por su id. Devuelve undefined si no existe */
 async function obtenerProductoPorId(id) {
     const productos = await obtenerProductos();
     return productos.find((producto) => producto.id === Number(id));
 }
 
-/* Filtra por nombre, categoría o material. Texto vacío => catálogo completo */
 async function buscarProductos(texto) {
     const productos = await obtenerProductos();
     const consulta = texto.trim().toLowerCase();
@@ -251,7 +250,6 @@ async function obtenerCategorias(){
 }
 
 
-/* Formatea un número como precio argentino: 899999.99 => "$ 899.999,99" */
 function formatearPrecio(precio) {
     return "$ " + precio.toLocaleString("es-AR", {
         minimumFractionDigits: 2,

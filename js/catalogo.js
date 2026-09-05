@@ -1,11 +1,3 @@
-/* ========================================================================
-   CAT�LOGO DE PRODUCTOS � productos.html
-   Renderiza la grilla completa y filtra con el campo de b�squeda.
-   Depende de js/productos.js y js/ui.js (deben cargarse antes que este).
-   ======================================================================== */
-
-/* Evita disparar una b�squeda por cada tecla: espera a que el usuario
-   deje de escribir durante este tiempo (en milisegundos) */
 const ESPERA_BUSQUEDA = 300;
 
 async function cargarCategorias(filtro) {
