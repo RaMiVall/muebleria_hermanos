@@ -1,6 +1,6 @@
 # Trabajo integrador Fullstack Developer 2026 - ITBA
 
-repositorio para trabajo integrador grupal del grupo 6 Comision 1 TT. El  mismo consiste en una página de e-commerce para una muebleria ficticia: Hermanos Jota.
+Repositorio para trabajo integrador grupal del grupo 6 Comision 1 TT. El  mismo consiste en una página de e-commerce para una muebleria ficticia: Hermanos Jota.
 
 Integrantes:
 - Contreras Valentin Ramiro
@@ -8,6 +8,11 @@ Integrantes:
 - García Fontana Sebastián José
 - Ramírez Lautaro Agustín
 - Retamozo Sequeira Jorge Nicolas
+
+## Ejecución
+
+La pagina se puede encontrar desplegada en el siguiente link https://muebleria-hermanos.netlify.app/
+Alternativamente clonando el repositorio y accediendo desde el archivo index.hmtl se puede tener la misma experiencia de uso pero en entorno local
 
 ## Funcionalidades
 
