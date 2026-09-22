@@ -125,6 +125,72 @@ function calcularTotal() {
     return carrito.reduce((acum, item) => acum + (item.precio * item.cantidad), 0);
 }
 
+function crearFilaCarrito(item) {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "cart-item-card";
+
+    const contenedorImagen = document.createElement("div");
+    contenedorImagen.className = "cart-item-img";
+    const imagen = document.createElement("img");
+    imagen.src = item.imagen;
+    imagen.alt = item.nombre;
+    contenedorImagen.appendChild(imagen);
+
+    const detalles = document.createElement("div");
+    detalles.className = "cart-item-details";
+    const nombre = document.createElement("h3");
+    nombre.className = "cart-item-title";
+    nombre.textContent = item.nombre;
+    const precio = document.createElement("p");
+    precio.className = "cart-item-price";
+    precio.textContent = `$${item.precio.toLocaleString("es-AR")}`;
+    detalles.append(nombre, precio);
+
+    const acciones = document.createElement("div");
+    acciones.className = "cart-item-actions";
+    const controlesCantidad = document.createElement("div");
+    controlesCantidad.className = "cart-quantity-controls";
+
+    const botonMenos = document.createElement("button");
+    botonMenos.type = "button";
+    botonMenos.dataset.action = "decrementar";
+    botonMenos.dataset.id = item.id;
+    botonMenos.setAttribute("aria-label", "Restar una unidad");
+    botonMenos.textContent = "-";
+
+    const entradaCantidad = document.createElement("input");
+    entradaCantidad.type = "number";
+    entradaCantidad.min = "1";
+    entradaCantidad.value = item.cantidad;
+    entradaCantidad.dataset.action = "cambiar-cantidad";
+    entradaCantidad.dataset.id = item.id;
+
+    const botonMas = document.createElement("button");
+    botonMas.type = "button";
+    botonMas.dataset.action = "incrementar";
+    botonMas.dataset.id = item.id;
+    botonMas.setAttribute("aria-label", "Sumar una unidad");
+    botonMas.textContent = "+";
+    controlesCantidad.append(botonMenos, entradaCantidad, botonMas);
+
+    const subtotal = document.createElement("span");
+    subtotal.className = "cart-item-subtotal";
+    subtotal.textContent = `$${(item.precio * item.cantidad).toLocaleString("es-AR")}`;
+
+    const botonQuitar = document.createElement("button");
+    botonQuitar.type = "button";
+    botonQuitar.className = "cart-btn-remove";
+    botonQuitar.dataset.action = "quitar";
+    botonQuitar.dataset.id = item.id;
+    botonQuitar.setAttribute("aria-label", "Eliminar producto");
+    botonQuitar.textContent = "×";
+
+    acciones.append(controlesCantidad, subtotal, botonQuitar);
+    tarjeta.append(contenedorImagen, detalles, acciones);
+
+    return tarjeta;
+}
+
 function renderizarPaginaCarrito() {
     const contenedor = document.getElementById("cart-page-container");
     if (!contenedor) return;
@@ -132,68 +198,107 @@ function renderizarPaginaCarrito() {
     const carrito = obtenerCarrito();
 
     if (carrito.length === 0) {
-        contenedor.innerHTML = `
-            <div class="cart-empty-state">
-                <h2>Tu carrito está vacío</h2>
-                <p>Parece que aún no agregaste ningún producto.</p>
-                <a href="productos.html" class="cart-btn-primary">Explorar Catálogo</a>
-            </div>
-        `;
+        const estadoVacio = document.createElement("div");
+        estadoVacio.className = "cart-empty-state";
+        const titulo = document.createElement("h2");
+        titulo.textContent = "Tu carrito está vacío";
+        const mensaje = document.createElement("p");
+        mensaje.textContent = "Parece que aún no agregaste ningún producto.";
+        const enlaceCatalogo = document.createElement("a");
+        enlaceCatalogo.href = "productos.html";
+        enlaceCatalogo.className = "cart-btn-primary";
+        enlaceCatalogo.textContent = "Explorar Catálogo";
+        estadoVacio.append(titulo, mensaje, enlaceCatalogo);
+        contenedor.replaceChildren(estadoVacio);
         return;
     }
 
     const subtotalTotal = calcularTotal();
+    const layout = document.createElement("div");
+    layout.className = "cart-layout";
 
-    let HTMLFilas = carrito.map(item => {
-        const subtotalItem = item.precio * item.cantidad;
-        return `
-            <div class="cart-item-card">
-                <div class="cart-item-img">
-                    <img src="${item.imagen}" alt="${item.nombre}">
-                </div>
-                <div class="cart-item-details">
-                    <h3 class="cart-item-title">${item.nombre}</h3>
-                    <p class="cart-item-price">$${item.precio.toLocaleString('es-AR')}</p>
-                </div>
-                <div class="cart-item-actions">
-                    <div class="cart-quantity-controls">
-                        <button type="button" onclick="cambiarCantidad(${item.id}, ${item.cantidad - 1})" aria-label="Restar una unidad">-</button>
-                        <input type="number" min="1" value="${item.cantidad}" onchange="cambiarCantidad(${item.id}, this.value)">
-                        <button type="button" onclick="cambiarCantidad(${item.id}, ${item.cantidad + 1})" aria-label="Sumar una unidad">+</button>
-                    </div>
-                    <span class="cart-item-subtotal">$${subtotalItem.toLocaleString('es-AR')}</span>
-                    <button type="button" class="cart-btn-remove" onclick="quitarDelCarrito(${item.id})" aria-label="Eliminar producto">&times;</button>
-                </div>
-            </div>
-        `;
-    }).join("");
+    const lista = document.createElement("div");
+    lista.className = "cart-list";
+    carrito.forEach((item) => lista.appendChild(crearFilaCarrito(item)));
 
-    contenedor.innerHTML = `
-        <div class="cart-layout">
-            <div class="cart-list">
-                ${HTMLFilas}
-                <div class="cart-list-actions">
-                    <button type="button" class="cart-btn-secondary" onclick="vaciarCarrito()">Vaciar Carrito</button>
-                </div>
-            </div>
-            <div class="cart-summary-card">
-                <h3>Resumen de Compra</h3>
-                <div class="cart-summary-row">
-                    <span>Subtotal</span>
-                    <span>$${subtotalTotal.toLocaleString('es-AR')}</span>
-                </div>
-                <div class="cart-summary-row cart-summary-total">
-                    <span>Total</span>
-                    <span>$${subtotalTotal.toLocaleString('es-AR')}</span>
-                </div>
-                <button type="button" class="cart-btn-primary cart-btn-checkout" onclick="alert('¡Gracias por tu compra!')">Finalizar Compra</button>
-            </div>
-        </div>
-    `;
+    const accionesLista = document.createElement("div");
+    accionesLista.className = "cart-list-actions";
+    const botonVaciar = document.createElement("button");
+    botonVaciar.type = "button";
+    botonVaciar.className = "cart-btn-secondary";
+    botonVaciar.dataset.action = "vaciar";
+    botonVaciar.textContent = "Vaciar Carrito";
+    accionesLista.appendChild(botonVaciar);
+    lista.appendChild(accionesLista);
+
+    const resumen = document.createElement("div");
+    resumen.className = "cart-summary-card";
+    const tituloResumen = document.createElement("h3");
+    tituloResumen.textContent = "Resumen de Compra";
+
+    const filaSubtotal = document.createElement("div");
+    filaSubtotal.className = "cart-summary-row";
+    const etiquetaSubtotal = document.createElement("span");
+    etiquetaSubtotal.textContent = "Subtotal";
+    const valorSubtotal = document.createElement("span");
+    valorSubtotal.textContent = `$${subtotalTotal.toLocaleString("es-AR")}`;
+    filaSubtotal.append(etiquetaSubtotal, valorSubtotal);
+
+    const filaTotal = document.createElement("div");
+    filaTotal.className = "cart-summary-row cart-summary-total";
+    const etiquetaTotal = document.createElement("span");
+    etiquetaTotal.textContent = "Total";
+    const valorTotal = document.createElement("span");
+    valorTotal.textContent = `$${subtotalTotal.toLocaleString("es-AR")}`;
+    filaTotal.append(etiquetaTotal, valorTotal);
+
+    const botonCheckout = document.createElement("button");
+    botonCheckout.type = "button";
+    botonCheckout.className = "cart-btn-primary cart-btn-checkout";
+    botonCheckout.dataset.action = "finalizar-compra";
+    botonCheckout.textContent = "Finalizar Compra";
+    resumen.append(tituloResumen, filaSubtotal, filaTotal, botonCheckout);
+
+    layout.append(lista, resumen);
+    contenedor.replaceChildren(layout);
+}
+
+function configurarEventosCarrito() {
+    const contenedor = document.getElementById("cart-page-container");
+    if (!contenedor) return;
+
+    contenedor.addEventListener("click", (evento) => {
+        const control = evento.target.closest("[data-action]");
+        if (!control) return;
+
+        const accion = control.dataset.action;
+        const idProducto = control.dataset.id;
+
+        if (accion === "incrementar" || accion === "decrementar") {
+            const input = control.closest(".cart-item-card").querySelector("input[data-action='cambiar-cantidad']");
+            const cantidadActual = parseInt(input.value, 10) || 1;
+            const incremento = accion === "incrementar" ? 1 : -1;
+            cambiarCantidad(idProducto, cantidadActual + incremento);
+        } else if (accion === "quitar") {
+            quitarDelCarrito(idProducto);
+        } else if (accion === "vaciar") {
+            vaciarCarrito();
+        } else if (accion === "finalizar-compra") {
+            alert("¡Gracias por tu compra!");
+        }
+    });
+
+    contenedor.addEventListener("change", (evento) => {
+        const control = evento.target.closest("[data-action='cambiar-cantidad']");
+        if (!control) return;
+
+        cambiarCantidad(control.dataset.id, control.value);
+    });
 }
 
 // Inicialización global al cargar el DOM
 document.addEventListener("DOMContentLoaded", () => {
     actualizarContadorHeader();
+    configurarEventosCarrito();
     renderizarPaginaCarrito();
 });

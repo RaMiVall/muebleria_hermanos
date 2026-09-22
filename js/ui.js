@@ -2,25 +2,44 @@ function crearTarjetaProducto(producto) {
     const tarjeta = document.createElement("article");
     tarjeta.className = "product-card";
 
-    const badge = producto.oferta
-        ? '<span class="product-badge">OFERTA</span>'
-        : "";
+    if (producto.oferta) {
+        const badge = document.createElement("span");
+        badge.className = "product-badge";
+        badge.textContent = "OFERTA";
+        tarjeta.appendChild(badge);
+    }
 
-    const precioAnterior = producto.precioOriginal
-        ? `<p class="product-price-original">${formatearPrecio(producto.precioOriginal)}</p>`
-        : "";
+    const enlace = document.createElement("a");
+    enlace.className = "product-link";
+    enlace.href = `producto.html?id=${encodeURIComponent(producto.id)}`;
 
-    tarjeta.innerHTML = `
-        ${badge}
-        <a class="product-link" href="producto.html?id=${producto.id}">
-            <div class="product-image">
-                <img src="${producto.imagen}" alt="${producto.alt}">
-            </div>
-            <h3 class="product-name">${producto.nombre}</h3>
-            ${precioAnterior}
-            <p class="product-price">${formatearPrecio(producto.precio)}</p>
-        </a>
-    `;
+    const contenedorImagen = document.createElement("div");
+    contenedorImagen.className = "product-image";
+
+    const imagen = document.createElement("img");
+    imagen.src = producto.imagen;
+    imagen.alt = producto.alt;
+    contenedorImagen.appendChild(imagen);
+
+    const nombre = document.createElement("h3");
+    nombre.className = "product-name";
+    nombre.textContent = producto.nombre;
+
+    enlace.append(contenedorImagen, nombre);
+
+    if (producto.precioOriginal) {
+        const precioAnterior = document.createElement("p");
+        precioAnterior.className = "product-price-original";
+        precioAnterior.textContent = formatearPrecio(producto.precioOriginal);
+        enlace.appendChild(precioAnterior);
+    }
+
+    const precio = document.createElement("p");
+    precio.className = "product-price";
+    precio.textContent = formatearPrecio(producto.precio);
+    enlace.appendChild(precio);
+
+    tarjeta.appendChild(enlace);
 
         const botonAgregar = document.createElement("button");
     botonAgregar.type = "button";
@@ -38,22 +57,29 @@ function crearTarjetaProducto(producto) {
 }
 
 function renderizarProductos(productos, contenedor) {
-    contenedor.innerHTML = "";
+    contenedor.replaceChildren();
     productos.forEach((producto) => {
         contenedor.appendChild(crearTarjetaProducto(producto));
     });
 }
 
 function mostrarCargando(contenedor) {
-    contenedor.innerHTML = '<p class="estado-carga">Cargando productos…</p>';
+    const mensaje = document.createElement("p");
+    mensaje.className = "estado-carga";
+    mensaje.textContent = "Cargando productos…";
+    contenedor.replaceChildren(mensaje);
 }
 
 function mostrarSinResultados(contenedor, consulta) {
-    contenedor.innerHTML =
-        `<p class="estado-vacio">No encontramos muebles que coincidan con "${consulta}". Probá con otra palabra.</p>`;
+    const mensaje = document.createElement("p");
+    mensaje.className = "estado-vacio";
+    mensaje.textContent = `No encontramos muebles que coincidan con "${consulta}". Probá con otra palabra.`;
+    contenedor.replaceChildren(mensaje);
 }
 
 function mostrarError(contenedor) {
-    contenedor.innerHTML =
-        '<p class="estado-error">No pudimos cargar los productos. Recargá la página para intentar de nuevo.</p>';
+    const mensaje = document.createElement("p");
+    mensaje.className = "estado-error";
+    mensaje.textContent = "No pudimos cargar los productos. Recargá la página para intentar de nuevo.";
+    contenedor.replaceChildren(mensaje);
 }
