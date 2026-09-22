@@ -1,66 +1,97 @@
+function mostrarErrorDetalle(contenedor, mensajeTexto) {
+    const mensaje = document.createElement("p");
+    mensaje.className = "estado-error";
+    mensaje.textContent = mensajeTexto;
+    contenedor.replaceChildren(mensaje);
+}
+
 async function iniciarDetalle() {
     const contenedor = document.querySelector("#contenedor-detalle");
     const URL = new URLSearchParams(window.location.search);
     const idProducto = URL.get("id");
 
     if (!idProducto) {
-        contenedor.innerHTML = `<p class="estado-error">No se especificación ningún producto.</p>`;
+        mostrarErrorDetalle(contenedor, "No se especificación ningún producto.");
         return;
     }
 
     const producto = await obtenerProductoPorId(idProducto);
 
     if (!producto) {
-        contenedor.innerHTML = `<p class="estado-error">El producto solicitado no existe.</p>`;
+        mostrarErrorDetalle(contenedor, "El producto solicitado no existe.");
         return;
     }
 
-    contenedor.innerHTML = `
-        <div class="detail-main-block">
-            <div class="detail-media">
-                <img src="${producto.imagen}" alt="${producto.alt}">
-            </div>
-            <div class="detail-info-box">
-                <h2>${producto.nombre}</h2>
-                <p>${producto.descripcion}</p>
-                <p class="detail-price">${formatearPrecio(producto.precio)}</p>
-            </div>
-        </div>
+    const contenido = document.createDocumentFragment();
 
-        <div class="detail-specs-box">
-            <h3>Especificaciones</h3>
-            <div class="detail-specs-grid">
-                <div class="spec-card">
-                    <span class="spec-label">Material</span>
-                    <span class="spec-value">${producto.material}</span>
-                </div>
-                <div class="spec-card">
-                    <span class="spec-label">Medidas</span>
-                    <span class="spec-value">${producto.medidas}</span>
-                </div>
-                <div class="spec-card">
-                    <span class="spec-label">Acabado</span>
-                    <span class="spec-value">${producto.acabado}</span>
-                </div>
-                <div class="spec-card">
-                    <span class="spec-label">Stock disponible</span>
-                    <span class="spec-value">${producto.stock} unidades</span>
-                </div>
-            </div>
-        </div>
+    const bloquePrincipal = document.createElement("div");
+    bloquePrincipal.className = "detail-main-block";
 
-        <div class="detail-action">
-            <button class="hero-button" id="btn-add-to-cart" type="button">Añadir al carrito</button>
-        </div>
-    `;
+    const media = document.createElement("div");
+    media.className = "detail-media";
+    const imagen = document.createElement("img");
+    imagen.src = producto.imagen;
+    imagen.alt = producto.alt;
+    media.appendChild(imagen);
 
-    const botonDetalle = document.getElementById("btn-add-to-cart");
+    const informacion = document.createElement("div");
+    informacion.className = "detail-info-box";
 
-    if (botonDetalle) {
-        botonDetalle.addEventListener("click", () => {
-            agregarAlCarrito(producto.id);
-        });
-    }
+    const nombre = document.createElement("h2");
+    nombre.textContent = producto.nombre;
+    const descripcion = document.createElement("p");
+    descripcion.textContent = producto.descripcion;
+    const precio = document.createElement("p");
+    precio.className = "detail-price";
+    precio.textContent = formatearPrecio(producto.precio);
+    informacion.append(nombre, descripcion, precio);
+
+    bloquePrincipal.append(media, informacion);
+
+    const especificaciones = document.createElement("div");
+    especificaciones.className = "detail-specs-box";
+    const tituloEspecificaciones = document.createElement("h3");
+    tituloEspecificaciones.textContent = "Especificaciones";
+
+    const grilla = document.createElement("div");
+    grilla.className = "detail-specs-grid";
+    const datosEspecificaciones = [
+        ["Material", producto.material],
+        ["Medidas", producto.medidas],
+        ["Acabado", producto.acabado],
+        ["Stock disponible", `${producto.stock} unidades`]
+    ];
+
+    datosEspecificaciones.forEach(([etiqueta, valor]) => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "spec-card";
+        const nombreDato = document.createElement("span");
+        nombreDato.className = "spec-label";
+        nombreDato.textContent = etiqueta;
+        const valorDato = document.createElement("span");
+        valorDato.className = "spec-value";
+        valorDato.textContent = valor;
+        tarjeta.append(nombreDato, valorDato);
+        grilla.appendChild(tarjeta);
+    });
+
+    especificaciones.append(tituloEspecificaciones, grilla);
+
+    const acciones = document.createElement("div");
+    acciones.className = "detail-action";
+    const botonAgregar = document.createElement("button");
+    botonAgregar.className = "hero-button";
+    botonAgregar.id = "btn-add-to-cart";
+    botonAgregar.type = "button";
+    botonAgregar.textContent = "Añadir al carrito";
+    acciones.appendChild(botonAgregar);
+
+    contenido.append(bloquePrincipal, especificaciones, acciones);
+    contenedor.replaceChildren(contenido);
+
+    botonAgregar.addEventListener("click", () => {
+        agregarAlCarrito(producto.id);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", iniciarDetalle);
